@@ -1,4 +1,4 @@
-# Capstone Project Manager
+# Freshbox
 
 A full-stack Next.js application for managing capstone projects. Built as a sample project for students learning modern web development.
 
