@@ -45,7 +45,7 @@ function SignInForm() {
     <div className="max-w-md w-full space-y-8">
       <div>
         <Link href="/" className="block text-center">
-          <span className="text-2xl font-bold text-primary-600">Capstone Manager</span>
+          <span className="text-2xl font-bold text-primary-600">FreshBox</span>
         </Link>
         <h2 className="mt-6 text-center text-3xl font-bold text-gray-900">
           Sign in to your account
@@ -110,14 +110,6 @@ function SignInForm() {
         </button>
       </form>
 
-      {/* Demo credentials hint */}
-      <div className="mt-6 p-4 bg-blue-50 rounded-lg">
-        <p className="text-sm text-blue-800 font-medium">Demo Credentials:</p>
-        <p className="text-sm text-blue-600 mt-1">
-          Email: alice@student.edu<br />
-          Password: password123
-        </p>
-      </div>
     </div>
   );
 }

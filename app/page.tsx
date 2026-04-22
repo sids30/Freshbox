@@ -1,106 +1,100 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
+import Navbar from '@/app/components/Navbar';
+import Footer from '@/app/components/Footer';
+
+export const metadata: Metadata = {
+  title: 'FreshBox — Fresh Local Produce Delivered',
+  description: 'FreshBox delivers fresh, locally sourced fruits and vegetables from nearby farms straight to your door. Subscribe today for weekly produce boxes.',
+};
+
+const s: Record<string, React.CSSProperties> = {
+  page: { display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#F8F4E3', fontFamily: 'Inter, sans-serif' },
+
+  // Hero
+  hero: {
+    background: 'linear-gradient(135deg, #2D6A4F 0%, #1B4332 100%)',
+    padding: '96px 24px',
+    textAlign: 'center',
+  },
+  heroInner: { maxWidth: 800, margin: '0 auto' },
+  heroH1: { fontSize: 52, fontWeight: 800, color: '#ffffff', marginBottom: 20, lineHeight: 1.15, letterSpacing: '-1px' },
+  heroP: { fontSize: 20, color: '#d1fae5', marginBottom: 40, lineHeight: 1.6, maxWidth: 600, margin: '0 auto 40px' },
+  heroBtn: {
+    display: 'inline-block',
+    backgroundColor: '#E76F51',
+    color: '#ffffff',
+    textDecoration: 'none',
+    padding: '16px 40px',
+    borderRadius: 50,
+    fontSize: 18,
+    fontWeight: 700,
+    boxShadow: '0 4px 20px rgba(231,111,81,0.5)',
+    transition: 'opacity 0.2s, transform 0.2s',
+  },
+
+  // How it works
+  section: { padding: '80px 24px', backgroundColor: '#F8F4E3' },
+  sectionInner: { maxWidth: 1100, margin: '0 auto' },
+  sectionH2: { fontSize: 38, fontWeight: 800, color: '#2D6A4F', textAlign: 'center', marginBottom: 56, letterSpacing: '-0.5px' },
+  grid3: { display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 28 },
+
+  // Step card
+  card: {
+    backgroundColor: '#ffffff',
+    borderRadius: 20,
+    padding: 36,
+    textAlign: 'center',
+    boxShadow: '0 2px 16px rgba(45,106,79,0.08)',
+    border: '1px solid #e6f4ec',
+    transition: 'box-shadow 0.2s',
+  },
+  cardEmoji: { fontSize: 48, marginBottom: 16, display: 'block' },
+  cardStep: { fontSize: 12, fontWeight: 700, color: '#E76F51', letterSpacing: 3, textTransform: 'uppercase' as const, marginBottom: 10 },
+  cardTitle: { fontSize: 20, fontWeight: 700, color: '#2D6A4F', marginBottom: 12 },
+  cardDesc: { fontSize: 15, color: '#6b7280', lineHeight: 1.65 },
+};
 
 export default function Home() {
   return (
-    <main className="min-h-screen flex flex-col">
-      {/* Navigation */}
-      <nav className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-16">
-            <div className="flex items-center">
-              <span className="text-xl font-bold text-primary-600">
-                Capstone Manager
-              </span>
-            </div>
-            <div className="flex items-center space-x-4">
-              <Link
-                href="/auth/signin"
-                className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
-              >
-                Sign In
-              </Link>
-              <Link
-                href="/auth/signup"
-                className="bg-primary-600 text-white hover:bg-primary-700 px-4 py-2 rounded-md text-sm font-medium transition-colors"
-              >
-                Get Started
-              </Link>
-            </div>
-          </div>
-        </div>
-      </nav>
+    <div style={s.page}>
+      <Navbar />
 
-      {/* Hero Section */}
-      <section className="flex-1 flex items-center justify-center px-4 py-12">
-        <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-6">
-            Manage Your Capstone Project
-            <span className="text-primary-600"> Effortlessly</span>
-          </h1>
-          <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-            Collaborate with your team, track tasks, and deliver your capstone project on time.
-            Built for students, by students.
+      {/* Hero */}
+      <section style={s.hero}>
+        <div style={s.heroInner}>
+          <h1 style={s.heroH1}>Farm Fresh, Delivered to Your Door</h1>
+          <p style={s.heroP}>
+            Weekly produce boxes sourced from local farms within 150km of you. No grocery stores. No middlemen. Just fresh.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              href="/auth/signup"
-              className="bg-primary-600 text-white hover:bg-primary-700 px-8 py-3 rounded-lg text-lg font-semibold transition-colors"
-            >
-              Start Your Project
-            </Link>
-            <Link
-              href="/auth/signin"
-              className="bg-white text-primary-600 border-2 border-primary-600 hover:bg-primary-50 px-8 py-3 rounded-lg text-lg font-semibold transition-colors"
-            >
-              Sign In
-            </Link>
+          <Link href="/pricing" style={s.heroBtn}>Start Your Subscription</Link>
+        </div>
+      </section>
+
+      {/* How It Works */}
+      <section style={s.section}>
+        <div style={s.sectionInner}>
+          <h2 style={s.sectionH2}>How FreshBox Works</h2>
+          <div style={s.grid3}>
+            <StepCard emoji="📦" step="Step 1" title="Choose Your Box" desc="Choose your box size: small, medium, or large — perfect for any household size." />
+            <StepCard emoji="🌾" step="Step 2" title="Freshly Harvested" desc="We harvest from local farms within 48 hours of delivery so you always get peak freshness." />
+            <StepCard emoji="🚚" step="Step 3" title="Delivered to You" desc="Fresh produce arrives at your door on your chosen delivery day, every single week." />
           </div>
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className="bg-white py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">
-            Everything You Need
-          </h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            <FeatureCard
-              title="Project Management"
-              description="Create projects, set milestones, and track progress from start to finish."
-              icon="📋"
-            />
-            <FeatureCard
-              title="Team Collaboration"
-              description="Invite team members, assign tasks, and communicate effectively."
-              icon="👥"
-            />
-            <FeatureCard
-              title="Task Tracking"
-              description="Break down work into tasks, set priorities, and never miss a deadline."
-              icon="✅"
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="bg-gray-50 py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-600">
-          <p>Sample Next.js Project for Capstone Course</p>
-          <p className="text-sm mt-2">Built with Next.js, PostgreSQL, Prisma, and NextAuth.js</p>
-        </div>
-      </footer>
-    </main>
+      <Footer />
+    </div>
   );
 }
 
-function FeatureCard({ title, description, icon }: { title: string; description: string; icon: string }) {
+function StepCard({ emoji, step, title, desc }: { emoji: string; step: string; title: string; desc: string }) {
   return (
-    <div className="bg-gray-50 rounded-xl p-6 text-center hover:shadow-lg transition-shadow">
-      <div className="text-4xl mb-4">{icon}</div>
-      <h3 className="text-xl font-semibold text-gray-900 mb-2">{title}</h3>
-      <p className="text-gray-600">{description}</p>
+    <div style={s.card}>
+      <span style={s.cardEmoji}>{emoji}</span>
+      <p style={s.cardStep}>{step}</p>
+      <h3 style={s.cardTitle}>{title}</h3>
+      <p style={s.cardDesc}>{desc}</p>
     </div>
   );
 }

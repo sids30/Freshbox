@@ -72,7 +72,7 @@ export default function SignUpPage() {
       <div className="max-w-md w-full space-y-8">
         <div>
           <Link href="/" className="block text-center">
-            <span className="text-2xl font-bold text-primary-600">Capstone Manager</span>
+            <span className="text-2xl font-bold text-primary-600">FreshBox</span>
           </Link>
           <h2 className="mt-6 text-center text-3xl font-bold text-gray-900">
             Create your account
@@ -85,7 +85,7 @@ export default function SignUpPage() {
           </p>
         </div>
 
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+        <form className="mt-8 space-y-6" onSubmit={handleSubmit} method="post">
           {errorMessage && (
             <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg text-sm">
               {errorMessage}

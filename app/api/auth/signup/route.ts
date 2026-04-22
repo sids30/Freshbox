@@ -1,6 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
+import { Resend } from 'resend';
 import prisma from '@/prisma/client';
+import { welcomeEmail } from '@/app/utils/emailTemplates/welcomeEmail';
+
+// Instantiate once — avoids creating a new client on every request
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(request: NextRequest) {
   try {
@@ -66,6 +71,25 @@ export async function POST(request: NextRequest) {
         createdAt: true,
       },
     });
+
+    // Send welcome email — Resend v6 never throws for API errors;
+    // it returns { data, error } instead. We check `error` explicitly
+    // so failures are always visible in the terminal without blocking signup.
+    // NOTE: onboarding@resend.dev only works when sending to the email
+    // address registered with your Resend account. For any other recipient
+    // you must add and verify your own domain at resend.com/domains.
+    const { data: emailData, error: emailError } = await resend.emails.send({
+      from: 'FreshBox <onboarding@resend.dev>',
+      to: user.email,
+      subject: 'Welcome to FreshBox! 🌿',
+      html: welcomeEmail(user.firstName),
+    });
+
+    if (emailError) {
+      console.error('[Resend] Welcome email failed:', JSON.stringify(emailError, null, 2));
+    } else {
+      console.log('[Resend] Welcome email sent — id:', emailData?.id);
+    }
 
     return NextResponse.json(
       {

@@ -218,3 +218,81 @@ model Comment {
   @@index([taskId])
   @@index([authorId])
 }
+
+// ============================================
+// FreshBox Business Models
+// ============================================
+
+model Customer {
+  id            String         @id @default(cuid())
+  firstName     String
+  lastName      String
+  email         String         @unique
+  phone         String?
+  address       String
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  // Relations
+  subscriptions Subscription[]
+  orders        Order[]
+
+  @@index([email])
+}
+
+model Subscription {
+  id          String   @id @default(cuid())
+  customerId  String
+  boxSize     String
+  status      String   @default("Active")
+  startDate   DateTime @default(now())
+  deliveryDay String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  customer    Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+
+  @@index([customerId])
+}
+
+model ProduceBox {
+  id            String   @id @default(cuid())
+  name          String
+  description   String
+  boxSize       String
+  pricePerWeek  Float
+  seasonalItems String
+  createdAt     DateTime @default(now())
+
+  // Relations
+  orders        Order[]
+}
+
+model Order {
+  id           String     @id @default(cuid())
+  customerId   String
+  produceBoxId String
+  deliveryDate DateTime
+  status       String     @default("Pending")
+  totalAmount  Float
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  // Relations
+  customer     Customer   @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  produceBox   ProduceBox @relation(fields: [produceBoxId], references: [id])
+
+  @@index([customerId])
+  @@index([produceBoxId])
+}
+
+model Farm {
+  id          String   @id @default(cuid())
+  name        String
+  location    String
+  description String
+  specialty   String
+  isOrganic   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+}
